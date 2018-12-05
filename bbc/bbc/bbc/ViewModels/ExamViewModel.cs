@@ -112,7 +112,7 @@ namespace bbc.ViewModels
                 myLayout.Children.Add(myLableQuestion);
 
                 // Lay cac cau tra loi trong cau hoi
-                if (Offline)
+                if (myOffline)
                 {
                     //answerDb = new AnswerDatabaseAccess();
                     //lstAnswer = answerDb.GetAnswerDb(question.QuestionID);

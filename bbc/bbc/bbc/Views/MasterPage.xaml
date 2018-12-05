@@ -43,13 +43,13 @@
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
+            <!--<ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
                                Color="Black"
                                WidthRequest="30"
                                HeightRequest="30"
                                HorizontalOptions="Center"
-                               Margin="10"/>
+                               Margin="10"/>-->
             <ListView
                 ItemsSource="{Binding ListTopic}" 
                 WidthRequest="300" 

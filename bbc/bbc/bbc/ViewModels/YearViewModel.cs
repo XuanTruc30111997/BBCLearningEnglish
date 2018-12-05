@@ -72,13 +72,7 @@ namespace bbc.ViewModels
         #region constructors
         public YearViewModel()
         {
-            //if (Offline)
-            //{
-            //    IsBusy = true;
-            //    // ShowListLessonFollowYear(null, null).GetAwaiter();
-            //    ShowMyDataOffline();
-            //    IsBusy = false;
-            //}
+            myOffline = true;
             ActionName = "Delete";
             IsBusy = true;
             ShowMyDataOffline().GetAwaiter();
@@ -143,9 +137,43 @@ namespace bbc.ViewModels
         private async void Download(string idLesson)
         {
             // DeleteLessonByID(idLesson);
+            if (myOffline)
+            {
+                DeleteLessonByID(idLesson);
+            }
+            else
+            {
+                DownloadLessonByID(idLesson).GetAwaiter();
+            }
+        }
 
+        private void DeleteLessonByID(string idLesson)
+        {
+            // Lấy các câu hỏi có trong Lesson
+            questionDb = new QuestionDatabaseAccess();
+            List<Question> myLstQuestion = new List<Question>();
+            myLstQuestion = questionDb.GetQuestionDb(idLesson);
+            foreach (var myQuestion in myLstQuestion)
+            {
+                // Thực hiện xóa câu trả lời
+                answerDb = new AnswerDatabaseAccess();
+                answerDb.DeleteAnswer(myQuestion.QuestionID);
+            }
+            // Thực hiện xóa câu hỏi
+            questionDb.DeleteQuestion(idLesson);
+            // Thực hiện xóa Lesson
+            lessonDb = new LessonDatabaseAccess();
+            lessonDb.DeleteLesson(idLesson);
+
+            DependencyService.Get<IMessage>().ShortToast("Delete completed");
+
+            ShowMyDataOffline().GetAwaiter();
+        }
+
+        private async Task DownloadLessonByID(string idLesson)
+        {
             string nameLesson = null; //lưu tên Lesson để thông báo
-            // Download Lesson
+                                      // Download Lesson
             foreach (var myLesson in ListLesson)
             {
                 if (myLesson.Id.Equals(idLesson))
@@ -171,29 +199,6 @@ namespace bbc.ViewModels
             }
 
             DependencyService.Get<IMessage>().LongToast("Download " + nameLesson + " Completed");
-        }
-
-        private void DeleteLessonByID(string idLesson)
-        {
-            // Lấy các câu hỏi có trong Lesson
-            questionDb = new QuestionDatabaseAccess();
-            List<Question> myLstQuestion = new List<Question>();
-            myLstQuestion = questionDb.GetQuestionDb(idLesson);
-            foreach (var myQuestion in myLstQuestion)
-            {
-                // Thực hiện xóa câu trả lời
-                answerDb = new AnswerDatabaseAccess();
-                answerDb.DeleteAnswer(myQuestion.QuestionID);
-            }
-            // Thực hiện xóa câu hỏi
-            questionDb.DeleteQuestion(idLesson);
-            // Thực hiện xóa Lesson
-            lessonDb = new LessonDatabaseAccess();
-            lessonDb.DeleteLesson(idLesson);
-
-            DependencyService.Get<IMessage>().ShortToast("Delete completed");
-
-            ShowMyDataOffline();
         }
 
         private async Task ShowMyDataOffline()

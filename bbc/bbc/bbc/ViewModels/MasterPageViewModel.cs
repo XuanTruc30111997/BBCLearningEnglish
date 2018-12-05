@@ -76,52 +76,28 @@ namespace bbc.ViewModels
         #region constructor
         public MasterPageViewModel()
         {
-            //if (CrossConnectivity.Current.IsConnected)
-            //{
-            //    Offline = false;
-            //    IsBusy = true;
-            //    Title = "BBC Learing English";
-            //    GetTopicAsync().GetAwaiter();
-            //    IsBusy = false;
-            //}
-            //else
-            //{
-            //    Offline = true;
-            //    DependencyService.Get<IMessage>().ShortToast("You are offline");
-            //}
-
-            //if(!Offline) // Online
-            //{
-            //    DependencyService.Get<IMessage>().ShortToast("You are online");
-            //    IsBusy = true;
-            //    Title = "BBC Learing English";
-            //    GetTopicAsync().GetAwaiter();
-            //    IsBusy = false;
-            //}
-            //else // Offline
-            //{
-            //    DependencyService.Get<IMessage>().ShortToast("You are offline");
-            //}
-            
             Title = "BBC Learing English";
             IsBusy = true;
             GetTopicAsync().GetAwaiter();
             IsBusy = false;
-
         }
         #endregion
 
         #region methods
         private async Task GetTopicAsync()
         {
-            topicService = new RestTopicService();
-            ListTopic = await topicService.GetDataAsync();
+            if (!myOffline)
+            {
+                topicService = new RestTopicService();
+                ListTopic = await topicService.GetDataAsync();
+            }
+            else
+                ListTopic.Clear();
         }
 
         NavigationService navigationService;
         private void DoWhenClickItem()
         {
-
             int index = _listTopic.IndexOf(_selectedItem);
             DependencyService.Get<IMessage>().ShortToast(_listTopic[index].Name);
 
@@ -132,15 +108,15 @@ namespace bbc.ViewModels
 
         private void ImageTap()
         {
+            myOffline = false;
             navigationService = new NavigationService();
             // await navigationService.MyNavigatorOnMaster(_listTopic[index].Id, "BBCMainPage");
             navigationService.MyNavigatorOnMaster(null, null);
         }
 
-
         private void MyDataOffline()
         {
-            Offline = true;
+            // Offline = true;
             myOffline = true;
             navigationService = new NavigationService();
             // await navigationService.MyNavigatorOnMaster(_listTopic[index].Id, "BBCMainPage");

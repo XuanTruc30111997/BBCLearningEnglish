@@ -20,7 +20,10 @@ namespace bbc.Functions
             var _currentPage = GetCurrentPage();
             MasterDetailPage myPage = (MasterDetailPage)_currentPage;
             if (idTopic != null && idTopic.Equals("MyDataOffline")) // Dữ liệu Offline
+            {
+                myPage.Master = new MasterPage();
                 myPage.Detail = new NavigationPage(new BBCMainPage());
+            }
             else
             {
                 if (idTopic != null) // Lesson theo năm
@@ -28,7 +31,10 @@ namespace bbc.Functions
                     myPage.Detail = new NavigationPage(new BBCMainPage(idTopic, title));
                 }
                 else // Tất cả Lesson
+                {
+                    myPage.Master = new MasterPage();
                     myPage.Detail = new NavigationPage(new BBCMainPage(null, null));
+                }
             }
             myPage.IsPresented = false;
         }

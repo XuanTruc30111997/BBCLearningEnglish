@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 
 using bbc.ViewModels;
 using bbc.Functions;
+using bbc.ViewModels;
 
 namespace bbc.Views
 {
@@ -25,11 +26,15 @@ namespace bbc.Views
             {
                 // Có kết nối
                 // Hiển thị Online
+                BaseViewModel.myOffline = false;
                 this.Detail = new NavigationPage(new BBCMainPage(null, null));
             }
             else // Không kết nối
+            {
+                BaseViewModel.myOffline = true;
                 this.Detail = new NavigationPage(new BBCMainPage()); // Hiển thị Offline
-            NavigationPage.SetHasNavigationBar(this, false); //turn off toolbar default
+                NavigationPage.SetHasNavigationBar(this, false); //turn off toolbar default
+            }
         }
 
         //protected override async void OnAppearing()
