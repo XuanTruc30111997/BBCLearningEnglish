@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bbc.Views.TestVideoPage"
+             Title="{Binding NameLesson}">
+
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <StackLayout>
+                <Button Text="Begin Exam"
+                        Command="{Binding ExamCommand}"/>
+            </StackLayout>
+                <ScrollView
+                VerticalOptions="FillAndExpand">
+                <StackLayout
+                    Orientation="Vertical">
+                    <Label
+                        Text="{Binding Transcript}"
+                        HorizontalOptions="Fill"
+                        Margin="10"
+                        FontSize="16"
+                        FontAttributes="Italic"
+                        TextColor="Black"/>
+                    </StackLayout>
+                </ScrollView>
+            <StackLayout 
+                Orientation="Vertical"
+                VerticalOptions="EndAndExpand">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Margin="5,0,0,0"
+                        VerticalOptions="Center"
+                        Text="{Binding Value,Source={x:Reference slider}}"
+                        TextColor="Black"
+                        FontAttributes="Italic"/>
+                    <Slider
+                        x:Name="slider"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Minimum="{Binding ValueSlider}"
+                        Maximum="{Binding MaximumSlider}"
+                        MinimumTrackColor="LightSkyBlue"
+                        MaximumTrackColor="Black"
+                        ThumbColor="LightSkyBlue"
+                        Value="{Binding ValueSlider}"/>
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Text="{Binding MaximumSlider}"
+                        VerticalOptions="Center"
+                        TextColor="Black"
+                        FontAttributes="Italic"/>
+                </Grid>
+
+                <Grid
+                HorizontalOptions="Center"
+                Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="btnPrevious" 
+                        Image="ic_skip_previous_black.png" 
+                        BackgroundColor="#FFFFFF"
+                        Grid.Column="0"
+                        Grid.Row="0"/>
+                    <Button x:Name="btnStepBackward" 
+                        Image="ic_step_backward_black.png"  
+                        BackgroundColor="#FFFFFF"
+                        Grid.Column="1"
+                        Grid.Row="0"/>
+                    <Button x:Name="btnPlayPause" 
+                        Image="ic_play_black.png" 
+                        Command="{Binding PlayClick}"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        BackgroundColor="#FFFFFF"/>
+                    <Button x:Name="btnStepForward" 
+                        Image="ic_step_forward_black.png"
+                        BackgroundColor="#FFFFFF"
+                        Grid.Column="3"
+                        Grid.Row="0"/>
+                    <Button x:Name="btnNext" 
+                        Image="ic_skip_next_black.png"
+                        BackgroundColor="#FFFFFF"
+                        Grid.Column="4"
+                        Grid.Row="0"/>
+                </Grid>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

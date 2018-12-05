@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bbc.Views.YearPage"
+             xmlns:viewModels="clr-namespace:bbc.ViewModels">
+
+    <ContentPage.BindingContext>
+        <viewModels:YearViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="Red"/>
+            <ListView 
+                ItemsSource="{Binding ListLesson}"
+                SelectedItem="{Binding SelectedItem}"
+                ItemTapped="ListView_ItemTapped"
+                HasUnevenRows="True"
+                Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<ImageCell                           
+                            Text="{Binding Name}"
+                            TextColor="LightSkyBlue"
+                            Detail="{Binding Sumary}"
+                            DetailColor="Maroon"
+                            ImageSource="{Binding ImageURL}"/>-->
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout
+                                    Orientation="Vertical"
+                                    Margin="0,5,0,0">
+                                    <StackLayout 
+                                        Orientation="Horizontal"
+                                        Spacing="5"
+                                        Margin="0,0,5,0">
+                                        <Image
+                                            Source="{Binding ImageURL}"
+                                            WidthRequest="100"
+                                            HeightRequest="50"
+                                            Aspect="AspectFill"/>
+                                        <StackLayout
+                                            Orientation="Vertical"
+                                            Spacing="3">
+                                            <Label
+                                                Text="{Binding Name}"
+                                                TextColor="Black"
+                                                FontSize="18"
+                                                FontAttributes="Bold"/>
+                                            <!--<Label
+                                                Text="{Binding Sumary}"
+                                                TextColor="Black"
+                                                FontSize="15"
+                                                FontAttributes="Italic"/>-->
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <!--<Button ClassId="{Binding Id}"
+                                        Text="Download"
+                                                HeightRequest="50"
+                                                WidthRequest="50"
+                                                Command="{Binding DownloadCommand, Mode=OneWayToSource}" />-->
+                                    <Label 
+                                        HeightRequest="1"                                            
+                                        BackgroundColor="Black"/>
+                                </StackLayout>
+                            </ViewCell.View>
+
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Download"
+                                          Clicked="Handler_DownloadLesson"
+                                          CommandParameter="{Binding Id}"/>
+                            </ViewCell.ContextActions>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

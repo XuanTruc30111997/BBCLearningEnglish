@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             x:Class="bbc.Views.MasterPage"
+             xmlns:viewModels="clr-namespace:bbc.ViewModels"
+             Title="{Binding Title}">
+    <!--
+    <ContentPage.BindingContext>
+        <viewModels:MasterPageViewModel/>
+    </ContentPage.BindingContext>
+    -->
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical">
+            <StackLayout
+                Orientation="Vertical"
+                WidthRequest="300"
+                BackgroundColor="LightSkyBlue">
+
+                <Image x:Name="myImage"
+                    Source="bbcAvatar.png"
+                    Aspect="AspectFill"
+                    Margin="10,10,10,10">
+                    <Image.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">100</On>
+                        </OnPlatform>
+                    </Image.WidthRequest>
+                    <Image.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">100</On>
+                        </OnPlatform>
+                    </Image.HeightRequest>
+                </Image>
+                
+                <Label      
+                     Text="kk"
+                     HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding ItemClick}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="Black"
+                               WidthRequest="30"
+                               HeightRequest="30"
+                               HorizontalOptions="Center"
+                               Margin="10"/>
+            <ListView
+                ItemsSource="{Binding ListTopic}" 
+                WidthRequest="300" 
+                HorizontalOptions="Center" 
+                Margin="10,10,10,10"
+                SelectedItem="{Binding SelectedItem}"
+                ItemTapped="ListView_ItemTapped">
+                <!--<ListView.Behaviors>
+                    <local:EventToCommandBehavior EventName="ItemSelected" Command="{Binding ItemClick}" />
+                </ListView.Behaviors>-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout
+                                Orientation="Horizontal">
+                                <Label      
+                                    Text="{Binding Name}"
+                                    HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="My Data Offline"
+                    Command="{Binding DataOfflineCommand}"/>
+
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

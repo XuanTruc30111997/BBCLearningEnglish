@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:local="clr-namespace:bbc.Views"
+            xmlns:viewModels="clr-namespace:bbc.ViewModels"
+             x:Class="bbc.Views.BBCMainPage">
+
+    <!--<TabbedPage.BindingContext>
+        <viewModels:MasterPageViewModel/>
+    </TabbedPage.BindingContext>-->
+    
+    <!--<local:YearPage Title="2016" />
+    <local:YearPage Title="2017"/>
+    <local:YearPage Title="2018"/>-->
+</TabbedPage>
