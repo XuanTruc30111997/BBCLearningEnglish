@@ -20,15 +20,14 @@ namespace bbc.ViewModels
 {
     public class YearViewModel : BaseViewModel
     {
-        public LessonDatabaseAccess lessonDb;
-        public QuestionDatabaseAccess questionDb;
-        public AnswerDatabaseAccess answerDb;
+        //public LessonDatabaseAccess lessonDb;
+        //public QuestionDatabaseAccess questionDb;
+        //public AnswerDatabaseAccess answerDb;
 
         #region Attributes
         private RestLessonService restLessonService = null;
         private Lesson _selectedItem { get; set; }
         private List<Lesson> _listLesson { get; set; }
-        private string _actionName;
         #endregion
 
         #region properties
@@ -51,19 +50,6 @@ namespace bbc.ViewModels
             set
             {
                 _listLesson = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string ActionName
-        {
-            get
-            {
-                return _actionName;
-            }
-            set
-            {
-                _actionName = value;
                 OnPropertyChanged();
             }
         }
@@ -103,9 +89,9 @@ namespace bbc.ViewModels
             set { }
         }
 
-        public Command<string> DownloadCommand
+        public Command<string> DownloadDeleteCommand
         {
-            get { return new Command<string>(Download); }
+            get { return new Command<string>(DownloadOrDelete); }
         }
         #endregion
 
@@ -134,19 +120,34 @@ namespace bbc.ViewModels
             // Download();
         }
 
-        private async void Download(string idLesson)
+        private async void DownloadOrDelete(string idLesson)
         {
             // DeleteLessonByID(idLesson);
+            DownloadDeleteLesson downloadDeleteLesson = new DownloadDeleteLesson();
             if (myOffline)
             {
-                DeleteLessonByID(idLesson);
+                if (await Application.Current.MainPage.DisplayAlert("Delete???", "Do you wan to Delete", "OK", "Cancel"))
+                {
+                    // DeleteLessonByID(idLesson);
+                    downloadDeleteLesson.DeleteLesson(idLesson).GetAwaiter();
+                    ShowMyDataOffline().GetAwaiter();
+                }
             }
             else
             {
-                DownloadLessonByID(idLesson).GetAwaiter();
+                // if (!CheckLessonForDownload(idLesson))
+                if(!downloadDeleteLesson.CheckLesson(idLesson))
+                {
+                    if (await Application.Current.MainPage.DisplayAlert("Download???", "Do you wan to download", "OK", "Cancel"))
+                        // DownloadLessonByID(idLesson).GetAwaiter();
+                        downloadDeleteLesson.DownloadLesson(ListLesson, idLesson).GetAwaiter();
+                }
+                else
+                    DependencyService.Get<IMessage>().LongToast("Download Fail!! The lesson already exists");
             }
         }
 
+        /* DeleteLesson
         private void DeleteLessonByID(string idLesson)
         {
             // Lấy các câu hỏi có trong Lesson
@@ -169,7 +170,9 @@ namespace bbc.ViewModels
 
             ShowMyDataOffline().GetAwaiter();
         }
+        */
 
+        /* DownloaLesson
         private async Task DownloadLessonByID(string idLesson)
         {
             string nameLesson = null; //lưu tên Lesson để thông báo
@@ -200,6 +203,24 @@ namespace bbc.ViewModels
 
             DependencyService.Get<IMessage>().LongToast("Download " + nameLesson + " Completed");
         }
+        */
+
+        /* CheckLessonForDownload
+        private bool CheckLessonForDownload(string idLesson)
+        {
+            List<Lesson> myListLessonOffline = new List<Lesson>();
+            myListLessonOffline = GetDataOffline.getLessonOffline();
+            if (myListLessonOffline != null)
+            {
+                foreach (var myLessonOffline in myListLessonOffline)
+                {
+                    if (myLessonOffline.Id == idLesson)
+                        return true;
+                }
+            }
+            return false;
+        }
+        */
 
         private async Task ShowMyDataOffline()
         {

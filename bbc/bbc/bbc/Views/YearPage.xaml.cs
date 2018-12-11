@@ -39,11 +39,11 @@ namespace bbc.Views
             _yearPageVM.ItemListViewClick.Execute(null);
         }
 
-        private void Handler_DownloadLesson(object sender, EventArgs e)
+        private void Handler_DownloadDeleteLesson(object sender, EventArgs e)
         {
             var vmYear = BindingContext as YearViewModel;
             var myLesson = (MenuItem)sender;
-            vmYear.DownloadCommand.Execute(myLesson.CommandParameter);
+            vmYear.DownloadDeleteCommand.Execute(myLesson.CommandParameter);
         }
     }
 }

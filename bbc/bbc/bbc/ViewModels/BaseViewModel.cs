@@ -53,5 +53,16 @@ namespace bbc.ViewModels
 
         // public static bool IsBusy { get; set; }
         public static bool myOffline { get; set; }
+
+        private string _actionName;
+        public string ActionName
+        {
+            get { return _actionName; }
+            set
+            {
+                _actionName = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

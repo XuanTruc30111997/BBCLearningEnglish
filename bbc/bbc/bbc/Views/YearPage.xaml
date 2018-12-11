@@ -11,9 +11,9 @@
     <ContentPage.Content>
         <StackLayout
             Orientation="Vertical">
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
+            <!--<ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
-                               Color="Red"/>
+                               Color="Red"/>-->
             <ListView 
                 ItemsSource="{Binding ListLesson}"
                 SelectedItem="{Binding SelectedItem}"
@@ -43,25 +43,25 @@
                                             HeightRequest="50"
                                             Aspect="AspectFill"/>
                                         <StackLayout
-                                            Orientation="Vertical"
+                                            Orientation="Horizontal"
                                             Spacing="3">
                                             <Label
                                                 Text="{Binding Name}"
                                                 TextColor="Black"
                                                 FontSize="18"
                                                 FontAttributes="Bold"/>
-                                            <!--<Label
-                                                Text="{Binding Sumary}"
-                                                TextColor="Black"
-                                                FontSize="15"
-                                                FontAttributes="Italic"/>-->
-                                        </StackLayout>
-                                    </StackLayout>
-                                    <!--<Button ClassId="{Binding Id}"
-                                        Text="Download"
+                                            
+                                            <!--<Button
                                                 HeightRequest="50"
                                                 WidthRequest="50"
-                                                Command="{Binding DownloadCommand, Mode=OneWayToSource}" />-->
+                                                Text="x"
+                                                Clicked="Handler_DownloadDeleteLesson"
+                                                CommandParameter="{Binding Id}"
+                                                IsVisible="{Binding myOffline}"
+                                                />-->
+                                            
+                                        </StackLayout>
+                                    </StackLayout>
                                     <Label 
                                         HeightRequest="1"                                            
                                         BackgroundColor="Black"/>
@@ -69,9 +69,10 @@
                             </ViewCell.View>
 
                             <ViewCell.ContextActions>
-                                <MenuItem Text="Download"
-                                          Clicked="Handler_DownloadLesson"
-                                          CommandParameter="{Binding Id}"/>
+                                <MenuItem Text="Download/Delete"
+                                          Clicked="Handler_DownloadDeleteLesson"
+                                          CommandParameter="{Binding Id}"
+                                          IsDestructive="True"/>
                             </ViewCell.ContextActions>
 
                         </ViewCell>

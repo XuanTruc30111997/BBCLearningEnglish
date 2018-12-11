@@ -33,15 +33,6 @@
                         </OnPlatform>
                     </Image.HeightRequest>
                 </Image>
-                
-                <Label      
-                     Text="kk"
-                     HorizontalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer 
-                            Command="{Binding ItemClick}" />
-                    </Label.GestureRecognizers>
-                </Label>
             </StackLayout>
             <!--<ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
